@@ -10,21 +10,21 @@
 
 	let filtered_packages = packages;
 
-	onMount(() => {
-		searchQuery.subscribe((searchValue) => {
-			if (searchValue == null || searchValue === "") {
-				filtered_packages = packages;
-			} else {
-				filtered_packages = packages.filter(
-					(pkg) =>
-						pkg.name.toLowerCase().indexOf(searchValue) !== -1 ||
-						pkg.description.toLowerCase().indexOf(searchValue) !==
-							-1 ||
-						pkg.tags.indexOf(searchValue) !== -1
-				);
-			}
-		});
-	});
+	//onMount(() => {
+	//	searchQuery.subscribe((searchValue) => {
+	//		if (searchValue == null || searchValue === "") {
+	//			filtered_packages = packages;
+	//		} else {
+	//			filtered_packages = packages.filter(
+	//				(pkg) =>
+	//					pkg.name.toLowerCase().indexOf(searchValue) !== -1 ||
+	//					pkg.description.toLowerCase().indexOf(searchValue) !==
+	//						-1 ||
+	//					pkg.tags.indexOf(searchValue) !== -1
+	//			);
+	//		}
+	//	});
+	//});
 </script>
 
 <section>

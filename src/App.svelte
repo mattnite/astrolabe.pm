@@ -10,14 +10,7 @@
 
 	let fetchData = (async () => {
 		const response = await fetch(
-			"https://zpm.random-projects.net/api/packages"
-		);
-		return await response.json();
-	})();
-
-	let fetchTags = (async () => {
-		const response = await fetch(
-			"https://zpm.random-projects.net/api/tags"
+			"https://astrolabe.pm/pkgs"
 		);
 		return await response.json();
 	})();
@@ -44,11 +37,12 @@
 			<PackagePage {fetchData} />
 		</Route>
 		<Route path="tag/*">
-			<TagPage {fetchTags} {fetchData} />
+			<TagPage {fetchData} />
 		</Route>
 		<Route path="author/*">
 			<AuthorPage {fetchData} />
 		</Route>
+
 	</main>
 </Router>
 

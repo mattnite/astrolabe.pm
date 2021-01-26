@@ -12,15 +12,15 @@
 		<NavLink to="/package/{pkg.name}">{pkg.name}</NavLink>
 	</h2>
 	<h3>
-		<NavLink to="/author/{pkg.author}">{pkg.author}</NavLink>
+                <NavLink to="/author/{pkg.user}">{pkg.user}</NavLink>
 	</h3>
 
-	<p>{pkg.description}</p>
+	<p>{pkg.description ? pkg.description : ""}</p>
 
-	<GitLogo class="git-logo" gitUrl={pkg.git} />
+	<GitLogo class="git-logo" gitUrl={pkg.source_url} />
 
 	<div class="tags-container">
-		<Tags tags={pkg.tags} />
+		<Tags tags={[]} />
 	</div>
 </div>
 

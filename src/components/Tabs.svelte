@@ -1,31 +1,21 @@
 <script>
 	import copyTextToClipboard from "copy-text-to-clipboard";
 
-	export let tabs;
+        export let user;
+        export let name;
+        let str = `gyro add ${user}/${name}`;
 	let copied = false;
-	let selected = Object.keys(tabs)[0];
 
 	function copyCallback(event) {
-		copyTextToClipboard(tabs[selected]);
+		copyTextToClipboard(str);
 		copied = true;
 	}
 </script>
 
 <div class="tabs">
-	<div class="buttons">
-		{#each Object.keys(tabs) as tab}
-			<button
-				class:selected={tab === selected}
-				on:click={(e) => {
-					copied = false;
-					selected = e.target.innerText;
-				}}>{tab}</button>
-		{/each}
-	</div>
-
 	<div class="block-container">
 		<div class="block-content">
-			<pre><code class="block">{tabs[selected]}</code></pre>
+                        <pre><code class="block">{str}</code></pre>
 			<button
 				class={copied ? 'checkButton' : 'copyButton'}
 				title={copied ? 'Copied to clipboard' : 'Copy to clipboard'}

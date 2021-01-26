@@ -10,47 +10,23 @@
 
 	export let fetchData;
 
+        let maybeDescription = (pkg) => {
+                if (pkg.description)
+                        return pkg.description;
+                else
+                        return "";
+        }
+
 	async function fetchPkg(id) {
 		return (await fetchData).find((_) => _.name === id);
 	}
 
-	async function getMainBranch(pkg) {
-		if (pkg.git && pkg.git.startsWith("https://github.com/")) {
-			return (
-				(
-					await (
-						await fetch(
-							`https://api.github.com/repos/${pkg.git.replace(
-								"https://github.com/",
-								""
-							)}`
-						)
-					).json()
-				).default_branch
-			);
-		}
-
-		return;
-	}
-
 	async function fetchReadme(pkg) {
-		if (pkg.git && pkg.git.startsWith("https://github.com/")) {
-			return utils.atobUnicode(
-				(
-					await (
-						await fetch(
-							`https://api.github.com/repos/${pkg.git.replace(
-								"https://github.com/",
-								""
-							)}/readme`
-						)
-					).json()
-				).content
-			);
-		}
-
-		return;
-	}
+                return await fetch(
+                        `https://astrolabe.pm/trees/${pkg.user}/${pkg.name}/${pkg.version}?path=README.md`
+                ).then(response => response.blob())
+                .then(blob => blob.text());
+        }
 </script>
 
 <Route path=":id" let:params>
@@ -59,19 +35,19 @@
 			<h1>Fetching Packages...</h1>
 		{:then pkg}
 			<header>
-				<h2>{pkg.name}</h2>
-				<GitLogo gitUrl={pkg.git} height="64" />
+                                <h2>{pkg.name} {pkg.version}</h2>
+				<GitLogo gitUrl={pkg.source_url} height="64" />
 			</header>
 			<h3>
-				<NavLink to="/author/{pkg.author}">by {pkg.author}</NavLink>
+				<NavLink to="/author/{pkg.user}">{pkg.user}</NavLink>
 			</h3>
 
 			<Tags tags={pkg.tags} />
 
-			<p>{pkg.description}</p>
+                        <p>{pkg.description ? pkg.description : ""}</p>
 
 			<div class="install">
-				<Tabs tabs={utils.tabsFromPackage(pkg)} />
+                                <Tabs user={pkg.user} name={pkg.name} />
 			</div>
 
 			<div class="sep" />
@@ -79,15 +55,7 @@
 			{#await fetchReadme(pkg)}
 				<h1>Fetching Readme</h1>
 			{:then readme}
-				{#if pkg.git && pkg.git.startsWith("https://github.com/")}
-					{#await getMainBranch(pkg)}
-						<h1>Fetching Readme</h1>
-					{:then branch}
-						<Markdown md={readme} baseUrl={`${pkg.git}/blob/${branch}/`} />
-					{/await}
-				{:else}
-					<Markdown md={readme} />
-				{/if}
+                                <Markdown md={readme} baseUrl={`https://astrolabe.pm/trees/${pkg.user}/${pkg.name}/${pkg.version}`}/>
 			{/await}
 		{:catch error}
 			<p>Error: <code>{error}</code></p>
