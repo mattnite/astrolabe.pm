@@ -6,7 +6,7 @@
 
 	async function fetchPackagesByAuthor(user) {
 		let data = await fetchData;
-		let result = data.filter((_) => _.author == user);
+		let result = data.filter((_) => _.user == user);
 		return result;
 	}
 </script>
@@ -14,7 +14,7 @@
 <Route path=":author" let:params>
 	<div class="tag-page">
 		<h2>{params.author}</h2>
-		<h3>Packages from this author</h3>
+		<h3>This user's packages</h3>
 
 		{#await fetchPackagesByAuthor(params.author)}
 			<h1>Fetching Packages...</h1>

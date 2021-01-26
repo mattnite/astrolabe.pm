@@ -28,7 +28,7 @@
 
 <div class="container">
 	<nav>
-		<NavLink to="/"><img src="img/zpm.svg" alt="logo" /></NavLink>
+		<NavLink to="/"><img src="img/gyro-light.png" alt="logo" /></NavLink>
 		<div class="items">
 			<input
 				bind:this={inputRef}
@@ -36,6 +36,7 @@
 				type="text"
 				placeholder="Press 's' to search" />
 			<NavLink to="/about">About</NavLink>
+			<a href="https://mattnite.github.io/gyro">Getting Started↗</a>
 		</div>
 	</nav>
 </div>
@@ -46,7 +47,7 @@
 			color: var(--text-color-a-alt);
 		}
 		img {
-			height: 32px;
+			height: 36px;
 		}
 
 		input[type="text"] {
