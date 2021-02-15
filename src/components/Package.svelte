@@ -20,7 +20,7 @@
 	<GitLogo class="git-logo" gitUrl={pkg.source_url} />
 
 	<div class="tags-container">
-		<Tags tags={[]} />
+		<Tags tags={pkg.tags} />
 	</div>
 </div>
 

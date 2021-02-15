@@ -2,36 +2,24 @@
 	import { Router, Route, createHistory } from "svelte-navigator";
 	import PackageList from "../components/PackageList.svelte";
 
-	export let fetchTags;
 	export let fetchData;
 
-	async function fetchTag(tag) {
-		return (await fetchTags).find((_) => _.name === tag);
-	}
-
-	async function fetchPackagesTagged(tag) {
-		return (await fetchData).filter((_) => _.tags.indexOf(tag) !== -1);
-	}
+        async function filterTags(tag) {
+                return (await fetchData).filter(_ => _.tags.includes(tag))
+        }
 </script>
 
 <Route path=":tag" let:params>
 	<div class="tag-page">
-		{#await fetchTag(params.tag)}
-			<h1>Fetching Tag...</h1>
-		{:then tag}
-			<h2>#{tag.name}</h2>
-			<h3>{tag.description}</h3>
+                <h2>#{params.tag}</h2>
 
-			{#await fetchPackagesTagged(params.tag)}
-				<h1>Fetching Package...</h1>
-			{:then packages}
-				<PackageList {packages} />
-			{:catch error}
-				<p>Error: <code>{error}</code></p>
-			{/await}
-		{:catch error}
-			<p>Error: <code>{error}</code></p>
-		{/await}
+                {#await filterTags(params.tag)}
+                        <h1>Fetching Package...</h1>
+                {:then packages}
+                        <PackageList {packages} />
+                {:catch error}
+                        <p>Error: <code>{error}</code></p>
+                {/await}
 	</div>
 </Route>
 

@@ -36,7 +36,7 @@
 				type="text"
 				placeholder="Press 's' to search" />
 			<NavLink to="/about">About</NavLink>
-			<a href="https://mattnite.github.io/gyro">Getting Started↗</a>
+			<a href="https://github.com/mattnite/gyro">Getting Started↗</a>
 		</div>
 	</nav>
 </div>
